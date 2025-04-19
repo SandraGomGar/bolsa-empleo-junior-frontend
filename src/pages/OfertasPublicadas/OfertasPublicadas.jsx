@@ -22,7 +22,7 @@ const OfertasPublicadas = () => {
         const res = await axios.get(`http://localhost:8081/api/ofertas/empresa/${usuario.id}`);
         setOfertas(res.data);
       } catch (error) {
-        toast.error("Error al cargar ofertas");
+        toast.error(`Error al cargar ofertas, ${error}`);
       } finally {
         setLoading(false);
       }
@@ -44,7 +44,7 @@ const OfertasPublicadas = () => {
       setOfertas((prev) => prev.filter((oferta) => oferta.id !== ofertaAEliminar));
       toast.success("Oferta eliminada correctamente ✅");
     } catch (error) {
-      toast.error("Error al eliminar la oferta ❌");
+      toast.error(`Error al eliminar la oferta ❌, ${error}`);
     } finally {
       setMostrarModal(false);
       setOfertaAEliminar(null);
@@ -68,7 +68,7 @@ const OfertasPublicadas = () => {
       toast.success("Oferta actualizada ✅");
       setEditandoId(null);
     } catch (err) {
-      toast.error("Error al actualizar la oferta ❌");
+      toast.error(`Error al actualizar la oferta ❌, ${err}`);
     }
   };
 

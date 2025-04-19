@@ -10,7 +10,12 @@ const AppNavbar = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    if(usuario.tipo === 'CANDIDATO'){
+      navigate("/login/candidato")
+
+    }else{
+      navigate("/login/empresa")
+    };
   };
 
   return (
