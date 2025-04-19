@@ -25,7 +25,7 @@ const Login = ({ tipo }) => {
     setLoading(true);
     try {
       const res = await axios.post("http://localhost:8081/auth/login", formData);
-      const usuario = res.data.usuario;
+      const usuario = res.data.usuario; // Asegúrate de extraer solo el objeto usuario
 
       if (tipo && usuario.tipo !== tipo) {
         toast.error(`Este acceso es solo para usuarios tipo ${tipo.toLowerCase()}`);
@@ -34,6 +34,8 @@ const Login = ({ tipo }) => {
       }
 
       toast.success("Inicio de sesión exitoso 🎉");
+
+      // ✅ Aquí nos aseguramos de guardar solo el objeto usuario
       loginContext(usuario);
 
       // Redirigir según el tipo

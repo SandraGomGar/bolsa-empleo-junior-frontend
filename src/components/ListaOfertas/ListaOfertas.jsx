@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { Card, ListGroup, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-const ListaOfertas = ({ ofertas, loading, error }) => {
-
+const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
   useEffect(() => {
     if (error) {
       toast.error("Error al cargar las ofertas");
@@ -47,7 +46,10 @@ const ListaOfertas = ({ ofertas, loading, error }) => {
                 <p className="mb-1 text-muted">{oferta.empresa?.nombre || "Empresa"}</p>
                 <small className="text-muted">{oferta.ubicacion}</small>
               </div>
-              <button className="btn btn-outline-primary btn-sm">
+              <button
+                className="btn btn-outline-primary btn-sm"
+                onClick={() => onVerDetalles(oferta.id)}
+              >
                 Ver detalles
               </button>
             </div>

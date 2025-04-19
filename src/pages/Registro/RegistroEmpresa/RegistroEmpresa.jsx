@@ -14,7 +14,6 @@ const RegistroEmpresa = () => {
     telefono: "",
     identificacionFiscal: "",
     descripcion: "",
-    tipo: "EMPRESA",
   });
 
   const [loading, setLoading] = useState(false);
@@ -29,6 +28,7 @@ const RegistroEmpresa = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación de longitud de descripción
     if (formData.descripcion.length < 70 || formData.descripcion.length > 2000) {
       toast.error("La descripción debe tener entre 70 y 2000 caracteres");
       return;
@@ -38,8 +38,6 @@ const RegistroEmpresa = () => {
     try {
       const res = await axios.post("http://localhost:8081/auth/registro-empresa", formData);
       toast.success("Registro de empresa exitoso 🎉");
-
-      // Redirigir automáticamente al login de empresa
       navigate("/login/empresa");
     } catch (err) {
       if (err.response?.data?.errors) {
@@ -98,6 +96,7 @@ const RegistroEmpresa = () => {
               value={formData.telefono}
               onChange={handleChange}
               required
+              placeholder="Ej: 612345678"
             />
           </Form.Group>
 
@@ -109,6 +108,7 @@ const RegistroEmpresa = () => {
               value={formData.identificacionFiscal}
               onChange={handleChange}
               required
+              placeholder="Ej: B12345678"
             />
           </Form.Group>
 

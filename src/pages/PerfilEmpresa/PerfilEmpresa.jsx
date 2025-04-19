@@ -1,12 +1,56 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { Form, Button, Card } from "react-bootstrap";
+import axios from "axios";
+import { UserContext } from "../../context/UserContext";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Button } from "react-bootstrap";
 
 const PerfilEmpresa = () => {
+  const { usuario, login } = useContext(UserContext);
+  const [formData, setFormData] = useState({
+    nombre: "",
+    email: "",
+    telefono: "",
+    identificacionFiscal: "",
+    descripcion: "",
+  });
+
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (usuario && usuario.tipo === "EMPRESA") {
+      setFormData({
+        nombre: usuario.nombre || "",
+        email: usuario.email || "",
+        telefono: usuario.telefono || "",
+        identificacionFiscal: usuario.identificacionFiscal || "",
+        descripcion: usuario.descripcion || "",
+      });
+    }
+  }, [usuario]);
+
+  const handleChange = (e) => {
+    setFormData((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleGuardar = async (e) => {
+    e.preventDefault();
+
+    try {
+      const res = await axios.put(`http://localhost:8081/auth/empresa/${usuario.id}`, formData);
+      login(res.data.usuario); // Actualiza los datos en el contexto
+      toast.success("Perfil actualizado correctamente 🎉");
+    } catch (err) {
+      toast.error("Error al actualizar perfil");
+      console.error(err);
+    }
+  };
+
   const handleCrearOferta = () => {
-    navigate("/empresa/crear-oferta"); // ✅ RUTA ACTUALIZADA
+    navigate("/empresa/crear-oferta");
   };
 
   return (
@@ -17,7 +61,71 @@ const PerfilEmpresa = () => {
           + Crear oferta
         </Button>
       </div>
-      <p>Información de la empresa registrada.</p>
+
+      <Card>
+        <Card.Body>
+          <Form onSubmit={handleGuardar}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre de la empresa</Form.Label>
+              <Form.Control
+                type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                name="email"
+                value={formData.email}
+                disabled
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Teléfono</Form.Label>
+              <Form.Control
+                type="text"
+                name="telefono"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Identificación Fiscal</Form.Label>
+              <Form.Control
+                type="text"
+                name="identificacionFiscal"
+                value={formData.identificacionFiscal}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Descripción</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={4}
+                name="descripcion"
+                value={formData.descripcion}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+
+            <Button type="submit" variant="primary">
+              Guardar cambios
+            </Button>
+          </Form>
+        </Card.Body>
+      </Card>
     </div>
   );
 };

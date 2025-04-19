@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Spinner, Card } from "react-bootstrap";
+import { Spinner, Card, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
+import { UserContext } from "../../context/UserContext";
 
 const DetalleOferta = () => {
   const { id } = useParams(); // ID de la oferta desde la URL
   const [oferta, setOferta] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [postulando, setPostulando] = useState(false);
+
+  const { usuario } = useContext(UserContext);
 
   useEffect(() => {
     const cargarOferta = async () => {
@@ -24,6 +29,29 @@ const DetalleOferta = () => {
 
     cargarOferta();
   }, [id]);
+
+  const manejarInscripcion = async () => {
+    if (!usuario || usuario.tipo !== "CANDIDATO") {
+      toast.error("Debes estar logueado como candidato para postularte");
+      return;
+    }
+
+    setPostulando(true);
+    try {
+      await axios.post(`http://localhost:8081/api/postulaciones`, null, {
+        params: {
+          candidatoId: usuario.id,
+          ofertaId: id
+        }
+      });
+      toast.success("Te has inscrito correctamente ✅");
+    } catch (error) {
+      const mensaje = error.response?.data?.message || "Error al inscribirte";
+      toast.error(mensaje);
+    } finally {
+      setPostulando(false);
+    }
+  };
 
   if (loading) return <div className="text-center mt-5"><Spinner animation="border" /></div>;
   if (error) return <div className="text-center mt-5 text-danger">Error al cargar la oferta.</div>;
@@ -43,6 +71,18 @@ const DetalleOferta = () => {
           <p><strong>Sueldo:</strong> {oferta.sueldo || "Salario no disponible"}</p>
           <p><strong>Fecha de publicación:</strong> {oferta.fechaPublicacion}</p>
           <p><strong>Empresa:</strong> {oferta.empresa?.nombre || "No disponible"}</p>
+
+          {/* 🔘 Botón para inscribirse */}
+          {usuario?.tipo === "CANDIDATO" && (
+            <Button
+              variant="primary"
+              onClick={manejarInscripcion}
+              disabled={postulando}
+              className="mt-3"
+            >
+              {postulando ? "Inscribiéndote..." : "Inscribirme a esta oferta"}
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </div>

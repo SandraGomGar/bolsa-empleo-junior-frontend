@@ -16,12 +16,12 @@ const AppNavbar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand as={Link} to="/">JR Job</Navbar.Brand>
+        <Navbar.Brand style={{width:"100%"}} as={Link} to="/">JR Job</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
+          {/* <Nav className="me-auto">
             <Nav.Link as={Link} to="/ofertas">Ofertas</Nav.Link>
-          </Nav>
+          </Nav> */}
 
           <Nav>
             {!usuario ? (
