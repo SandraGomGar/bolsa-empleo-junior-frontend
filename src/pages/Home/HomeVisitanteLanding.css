@@ -1,0 +1,137 @@
+/* Fondo general suave */
+.landing-container {
+    background-color: #fefeff;
+    /* padding: 2rem 1rem; */
+    min-height: 100vh;
+  }
+  
+  /* ========================= */
+  /* 🟦 Hero principal         */
+  /* ========================= */
+  .hero-section {
+    background-color: #e8f0ff;
+    border-radius:  0 0 12px 12px;
+    padding: 3rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap-reverse;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-position: 50% center;
+    background-color: #AEAFFE40;
+    overflow-x: clip;
+    padding: 198px 0px 140px;
+  }
+
+  .custom-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .hero-text {
+    max-width: 600px;
+  }
+  
+  .hero-text h1 {
+    color: #3e3e70;
+    font-weight: bold;
+    font-size: 2.5rem;
+  }
+  
+  .hero-text p {
+    color: #4e4e8a;
+    font-size: 1.1rem;
+  }
+  
+  .marca {
+    color: #7a5af5;
+  }
+  
+  /* Buscador */
+  .buscador-form {
+    margin-top: 1.5rem;
+
+  }
+  
+  .buscador-form input {
+    min-width: 220px;
+  }
+  
+  .buscador-form button {
+    white-space: nowrap;
+  }
+  
+  /* Imagen lateral */
+  .hero-image img {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 12px;
+  }
+  
+  
+  /* ========================= */
+  /* 🧭 Pasos: ¿Cómo funciona? */
+  /* ========================= */
+  .pasos {
+    margin-top: 2rem;
+  }
+  
+  .paso-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 260px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .paso-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .paso-card h5 {
+    color: #4a3d8f;
+    font-weight: 600;
+  }
+  
+  .paso-card p {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  
+  
+  /* ========================= */
+  /* 🏢 Empresas destacadas    */
+  /* ========================= */
+  .empresas-destacadas {
+    margin-top: 4rem;
+    padding-bottom: 140px;
+  }
+  
+  .empresa-card {
+    background-color: #f2f2ff;
+    border-radius: 12px;
+    min-width: 150px;
+    text-align: center;
+    font-weight: 500;
+    color: #3e3e70;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+  }
+  
+  .empresa-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .buttonForm{
+    background-color: #7FDDB1;
+    border: #AEAFFE;
+    &:hover{
+      background-color: #AEAFFE;
+    }
+  }

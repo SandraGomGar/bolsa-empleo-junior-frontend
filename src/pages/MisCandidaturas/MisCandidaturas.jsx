@@ -17,6 +17,7 @@ const MisCandidaturas = () => {
           `http://localhost:8081/api/postulaciones/candidato/${usuario.id}`
         );
         setPostulaciones(res.data);
+      // eslint-disable-next-line no-unused-vars
       } catch (err) {
         toast.error("Error al cargar tus candidaturas 😢");
       } finally {

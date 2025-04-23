@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Card, ListGroup, Spinner } from "react-bootstrap";
+import { Card, ListGroup, Spinner, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
 
 const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
@@ -40,18 +40,20 @@ const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
       <ListGroup variant="flush">
         {ofertas?.map((oferta) => (
           <ListGroup.Item key={oferta.id}>
-            <div className="d-flex justify-content-between align-items-start">
-              <div>
+            <div className="d-flex justify-content-between align-items-start flex-wrap">
+              <div className="me-3">
                 <h5>{oferta.titulo}</h5>
                 <p className="mb-1 text-muted">{oferta.empresa?.nombre || "Empresa"}</p>
                 <small className="text-muted">{oferta.ubicacion}</small>
               </div>
-              <button
-                className="btn btn-outline-primary btn-sm"
+              <Button
+                variant="outline-primary"
+                size="sm"
                 onClick={() => onVerDetalles(oferta.id)}
+                aria-label={`Ver detalles de la oferta ${oferta.titulo}`}
               >
                 Ver detalles
-              </button>
+              </Button>
             </div>
           </ListGroup.Item>
         ))}

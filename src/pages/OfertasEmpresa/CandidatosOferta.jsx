@@ -15,6 +15,7 @@ const CandidatosOferta = () => {
       try {
         const res = await axios.get(`http://localhost:8081/api/postulaciones/oferta/${id}`);
         setPostulaciones(res.data);
+      // eslint-disable-next-line no-unused-vars
       } catch (error) {
         toast.error("Error al cargar los candidatos");
       } finally {
@@ -38,6 +39,7 @@ const CandidatosOferta = () => {
       );
 
       toast.success(`Candidato ${nuevoEstado.toLowerCase()}`);
+    // eslint-disable-next-line no-unused-vars
     } catch (error) {
       toast.error("Error al actualizar el estado");
     }

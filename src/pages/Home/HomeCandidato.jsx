@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const HomeCandidato = () => {
   const [ofertas, setOfertas] = useState([]);
+  const [ofertasOriginales, setOfertasOriginales] = useState([]); // ✅ NUEVO
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [filtros, setFiltros] = useState({
@@ -23,6 +24,7 @@ const HomeCandidato = () => {
     try {
       const data = await OfertasService.getAll();
       setOfertas(data);
+      setOfertasOriginales(data); // ✅ Guardamos la copia base
     } catch (err) {
       console.error("Error al cargar ofertas:", err);
       setError(true);
@@ -33,7 +35,7 @@ const HomeCandidato = () => {
 
   const handleBuscar = (e) => {
     e.preventDefault();
-    const resultados = ofertas.filter((oferta) => {
+    const resultados = ofertasOriginales.filter((oferta) => {
       const coincidePalabra =
         filtros.palabraClave === "" ||
         oferta.titulo.toLowerCase().includes(filtros.palabraClave.toLowerCase());
@@ -55,7 +57,12 @@ const HomeCandidato = () => {
         Bienvenido/a, aquí puedes encontrar ofertas adaptadas a tu perfil 🎯
       </h2>
       <BuscadorOfertas filtros={filtros} setFiltros={setFiltros} onBuscar={handleBuscar} />
-      <ListaOfertas ofertas={ofertas} loading={loading} error={error} onVerDetalles={handleVerDetalles} />
+      <ListaOfertas
+        ofertas={ofertas}
+        loading={loading}
+        error={error}
+        onVerDetalles={handleVerDetalles}
+      />
     </div>
   );
 };

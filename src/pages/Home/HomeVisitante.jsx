@@ -7,6 +7,7 @@ import { Button } from "react-bootstrap";
 
 const HomeVisitante = () => {
   const [ofertas, setOfertas] = useState([]);
+  const [ofertasOriginales, setOfertasOriginales] = useState([]); // ✅ NUEVO
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -25,6 +26,7 @@ const HomeVisitante = () => {
     try {
       const data = await OfertasService.getAll();
       setOfertas(data);
+      setOfertasOriginales(data); // ✅ Guardamos las originales
     } catch (error) {
       console.error("Error al cargar ofertas:", error);
       setError(true);
@@ -35,7 +37,7 @@ const HomeVisitante = () => {
 
   const handleBuscar = (e) => {
     e.preventDefault();
-    const resultados = ofertas.filter((oferta) => {
+    const resultados = ofertasOriginales.filter((oferta) => {
       const coincidePalabra =
         filtros.palabraClave === "" ||
         oferta.titulo.toLowerCase().includes(filtros.palabraClave.toLowerCase());
@@ -48,12 +50,21 @@ const HomeVisitante = () => {
     setOfertas(resultados);
   };
 
+  const handleVerDetalles = (id) => {
+    navigate(`/oferta/${id}`);
+  };
+
   return (
     <div className="container mt-5">
       <h1 className="text-center mb-4">🎯 JRJob</h1>
 
       <BuscadorOfertas filtros={filtros} setFiltros={setFiltros} onBuscar={handleBuscar} />
-      <ListaOfertas ofertas={ofertas} loading={loading} error={error} />
+      <ListaOfertas
+        ofertas={ofertas}
+        loading={loading}
+        error={error}
+        onVerDetalles={handleVerDetalles}
+      />
 
       {/* Sección Empresas que buscan talento junior */}
       <section className="mt-5">

@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { Spinner, Card, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -72,7 +72,7 @@ const DetalleOferta = () => {
           <p><strong>Fecha de publicación:</strong> {oferta.fechaPublicacion}</p>
           <p><strong>Empresa:</strong> {oferta.empresa?.nombre || "No disponible"}</p>
 
-          {/* 🔘 Botón para inscribirse */}
+          {/* 🔘 Botón para inscribirse si es candidato */}
           {usuario?.tipo === "CANDIDATO" && (
             <Button
               variant="primary"
@@ -82,6 +82,13 @@ const DetalleOferta = () => {
             >
               {postulando ? "Inscribiéndote..." : "Inscribirme a esta oferta"}
             </Button>
+          )}
+
+          {/* 🔒 Mostrar mensaje si no está logueado */}
+          {!usuario && (
+            <div className="alert alert-info mt-4">
+              Para poder inscribirte en esta oferta debes <Link to="/registro/candidato">registrarte</Link> o <Link to="/login/candidato">iniciar sesión</Link>.
+            </div>
           )}
         </Card.Body>
       </Card>

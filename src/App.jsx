@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from "react-toastify";
 import RouterConfig from './router/RouterConfig';
 import { UserProvider } from './context/UserContext';
-import AppNavbar from './components/Navbar';
+import AppNavbar from './components/NavBar/Navbar';
 
 function App() {
   return (

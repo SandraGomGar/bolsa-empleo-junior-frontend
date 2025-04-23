@@ -1,8 +1,10 @@
-// src/components/Navbar.jsx
+
 import React, { useContext } from "react";
 import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../../context/UserContext";
+import logoWeb from "../../assets/images/logoWeb.png"; 
+import './NavBar.styles.css'
 
 const AppNavbar = () => {
   const { usuario, logout } = useContext(UserContext);
@@ -10,25 +12,38 @@ const AppNavbar = () => {
 
   const handleLogout = () => {
     logout();
-    if(usuario.tipo === 'CANDIDATO'){
-      navigate("/login/candidato")
-
-    }else{
-      navigate("/login/empresa")
-    };
+    if (usuario.tipo === 'CANDIDATO') {
+      navigate("/login/candidato");
+    } else {
+      navigate("/login/empresa");
+    }
   };
 
+  const navigateTo =
+    usuario?.tipo === 'CANDIDATO' ? '/candidato/home' :
+      usuario?.tipo === 'EMPRESA'
+        ? '/empresa/home' :
+        '/';
+
+        const handleLogoClick = () => {
+          window.location.href = navigateTo; 
+        };
+
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand style={{width:"100%"}} as={Link} to="/">JR Job</Navbar.Brand>
+    <Navbar bg="light" expand="lg" className="custom-navbar">
+      <div class='container-fluid custom-container'>
+        <Navbar.Brand as={Link} onClick={handleLogoClick} style={{ width: "100px" }}>
+          <img
+
+            src={logoWeb}
+            alt="JRJob"
+            style={{ width: "100%", height: "auto", objectFit: "contain" }}
+          />
+        </Navbar.Brand>
+
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* <Nav className="me-auto">
-            <Nav.Link as={Link} to="/ofertas">Ofertas</Nav.Link>
-          </Nav> */}
-
-          <Nav>
+          <Nav className="ms-auto">
             {!usuario ? (
               <>
                 <Nav.Link as={Link} to="/login/candidato">Login Candidato</Nav.Link>
@@ -54,7 +69,7 @@ const AppNavbar = () => {
             )}
           </Nav>
         </Navbar.Collapse>
-      </Container>
+      </div>
     </Navbar>
   );
 };

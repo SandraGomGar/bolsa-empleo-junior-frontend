@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const PerfilEmpresa = () => {
   const { usuario, login } = useContext(UserContext);
+  const [modoEdicion, setModoEdicion] = useState(false);
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -43,6 +44,7 @@ const PerfilEmpresa = () => {
       const res = await axios.put(`http://localhost:8081/auth/empresa/${usuario.id}`, formData);
       login(res.data.usuario); // Actualiza los datos en el contexto
       toast.success("Perfil actualizado correctamente 🎉");
+      setModoEdicion(false);
     } catch (err) {
       toast.error("Error al actualizar perfil");
       console.error(err);
@@ -72,6 +74,7 @@ const PerfilEmpresa = () => {
                 name="nombre"
                 value={formData.nombre}
                 onChange={handleChange}
+                disabled={!modoEdicion}
                 required
               />
             </Form.Group>
@@ -93,6 +96,7 @@ const PerfilEmpresa = () => {
                 name="telefono"
                 value={formData.telefono}
                 onChange={handleChange}
+                disabled={!modoEdicion}
                 required
               />
             </Form.Group>
@@ -104,6 +108,7 @@ const PerfilEmpresa = () => {
                 name="identificacionFiscal"
                 value={formData.identificacionFiscal}
                 onChange={handleChange}
+                disabled={!modoEdicion}
                 required
               />
             </Form.Group>
@@ -116,13 +121,25 @@ const PerfilEmpresa = () => {
                 name="descripcion"
                 value={formData.descripcion}
                 onChange={handleChange}
+                disabled={!modoEdicion}
                 required
               />
             </Form.Group>
 
-            <Button type="submit" variant="primary">
-              Guardar cambios
-            </Button>
+            {modoEdicion ? (
+              <div className="d-flex justify-content-between">
+                <Button type="submit" variant="primary">
+                  💾 Guardar cambios
+                </Button>
+                <Button variant="secondary" onClick={() => setModoEdicion(false)}>
+                  Cancelar
+                </Button>
+              </div>
+            ) : (
+              <Button variant="outline-primary" onClick={() => setModoEdicion(true)}>
+                ✏️ Editar
+              </Button>
+            )}
           </Form>
         </Card.Body>
       </Card>
