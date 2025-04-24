@@ -1,0 +1,99 @@
+/* Estilos generales */
+.page-title {
+    color: #2c3e50;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+/* Tarjeta de candidatura */
+.application-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    box-shadow: none;
+    transition: all 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.application-card:hover {
+    border-color: #a0a0a0;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Títulos */
+.job-title {
+    color: #2c3e50;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.job-company {
+    color: #6c757d;
+    font-size: 0.9rem;
+}
+
+/* Detalles */
+.job-details {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 12px;
+}
+
+.detail-row {
+    display: flex;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    color: #6c757d;
+    min-width: 110px;
+    display: flex;
+    align-items: center;
+}
+
+/* Badges */
+.status-badge {
+    font-size: 0.75rem;
+    padding: 10px 15px;
+    font-weight: 500;
+    border-radius: 4px;
+}
+
+/* Botón */
+.details-button {
+    border-radius: 6px;
+    font-size: 0.9rem;
+    padding: 8px;
+    border-width: 1px;
+    background-color: #7FDDB1;
+    color: white;
+    font-weight: bold;
+    border: none;
+
+    &:hover {
+        background-color: #53aa82;
+    }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .detail-row {
+        flex-direction: column;
+    }
+
+    .detail-label {
+        margin-bottom: 2px;
+    }
+}
+
+.title-container-offer {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}

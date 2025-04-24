@@ -1,9 +1,10 @@
-// src/pages/PerfilCandidato/PerfilCandidato.jsx
+
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { UserContext } from "../../context/UserContext";
 import { Form, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
+import './PerfilCandidato.styles.css'
 
 const PerfilCandidato = () => {
   const { usuario } = useContext(UserContext);
@@ -16,7 +17,7 @@ const PerfilCandidato = () => {
   const [estudios, setEstudios] = useState([]);
   const [editingEst, setEditingEst] = useState({});
 
-  // 1. Carga inicial
+
   useEffect(() => {
     if (!usuario?.id) return;
     axios
@@ -24,7 +25,7 @@ const PerfilCandidato = () => {
       .then(({ data }) => {
         const perfil = data; // UsuarioController devuelve directamente el Usuario
         setDetalles(perfil);
-
+        console.log(detalles)
         // Datos personales
         setFormData({
           nombre: perfil.nombre || "",
@@ -63,9 +64,9 @@ const PerfilCandidato = () => {
         console.error("Error al cargar perfil:", err);
         toast.error("No se pudo cargar el perfil");
       });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [usuario]);
 
-  // 2. Cambios en datos personales / ubicación / otros
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -80,7 +81,6 @@ const PerfilCandidato = () => {
       .catch(() => toast.error("❌ Error al actualizar perfil"));
   };
 
-  // 3. Funciones para Idiomas
   const añadirIdioma = () => {
     const { nuevoIdioma, nuevoNivel, idiomas } = formData;
     if (!nuevoIdioma || !nuevoNivel) {
@@ -94,7 +94,6 @@ const PerfilCandidato = () => {
     }));
   };
 
-  // 4. Funciones Experiencia
   const handleEditarExp = (i) =>
     setEditingExp((prev) => ({ ...prev, [i]: true }));
   const handleChangeExp = (i, field, value) => {
@@ -107,9 +106,9 @@ const PerfilCandidato = () => {
     const url = exp.id
       ? `http://localhost:8081/usuarios/experiencia/${exp.id}` // PUT si ya existe
       : `http://localhost:8081/usuarios/${usuario.id}/experiencia`; // POST si es nueva
-  
+
     const method = exp.id ? axios.put : axios.post;
-  
+
     method(url, exp)
       .then(({ data }) => {
         const nuevasExperiencias = [...experiencias];
@@ -154,7 +153,6 @@ const PerfilCandidato = () => {
     setEditingExp((prev) => ({ ...prev, [newIndex]: true }));
   };
 
-  // 5. Funciones Estudios (análogas)
   const handleEditarEst = (i) =>
     setEditingEst((prev) => ({ ...prev, [i]: true }));
   const handleChangeEst = (i, field, value) => {
@@ -167,9 +165,9 @@ const PerfilCandidato = () => {
     const url = est.id
       ? `http://localhost:8081/usuarios/estudio/${est.id}` // PUT si ya existe
       : `http://localhost:8081/usuarios/${usuario.id}/estudio`; // POST si es nuevo
-  
+
     const method = est.id ? axios.put : axios.post;
-  
+
     method(url, est)
       .then(({ data }) => {
         const nuevosEstudios = [...estudios];
@@ -212,11 +210,11 @@ const PerfilCandidato = () => {
   if (!formData) return <div className="container mt-4">Cargando perfil...</div>;
 
   return (
-    <div className="container mt-4 mb-5">
+    <div className="container mt-5 mb-5">
       <h2 className="mb-4">👤 Mi perfil - Candidato</h2>
 
-      {/* 🗂️ Datos personales */}
-      <Card className="mb-5 p-3">
+      {/* Datos personales */}
+      <Card className="mb-5 p-3 Card">
         <h5>🗂️ Datos personales</h5>
         <Form>
           <Form.Group className="mb-2">
@@ -290,8 +288,8 @@ const PerfilCandidato = () => {
         </Form>
       </Card>
 
-      {/* 💼 Experiencia laboral */}
-      <Card className="mb-5 p-3">
+      {/*  Experiencia laboral */}
+      <Card className="mb-5 p-3 Card">
         <h5>💼 Experiencia laboral</h5>
         {experiencias.map((exp, i) => (
           <Card key={i} className="mb-3 p-3">
@@ -402,14 +400,14 @@ const PerfilCandidato = () => {
           </Card>
         ))}
         <div className="text-end">
-          <Button variant="primary" size="sm" onClick={añadirNuevaExp}>
+          <Button className='alert-info-custom' variant="primary" size="lg" onClick={añadirNuevaExp}>
             ➕ Añadir experiencia
           </Button>
         </div>
       </Card>
 
-      {/* 🎓 Estudios */}
-      <Card className="mb-5 p-3">
+      {/*  Estudios */}
+      <Card className="mb-5 p-3 Card">
         <h5>🎓 Estudios</h5>
         {estudios.map((est, i) => (
           <Card key={i} className="mb-3 p-3">
@@ -519,14 +517,14 @@ const PerfilCandidato = () => {
           </Card>
         ))}
         <div className="text-end">
-          <Button variant="primary" size="sm" onClick={añadirNuevoEst}>
+          <Button className='alert-info-custom' variant="primary" size="lg" onClick={añadirNuevoEst}>
             ➕ Añadir estudio
           </Button>
         </div>
       </Card>
 
-      {/* 🌍 Idiomas */}
-      <Card className="mb-5 p-3">
+      {/*  Idiomas */}
+      <Card className="mb-5 p-3 Card">
         <h5>🌍 Idiomas</h5>
         {formData.idiomas.length > 0 ? (
           <ul>
@@ -558,8 +556,8 @@ const PerfilCandidato = () => {
         </div>
       </Card>
 
-      {/* 📝 Otros datos */}
-      <Card className="mb-5 p-3">
+      {/*  Otros datos */}
+      <Card className="mb-5 p-3 Card">
         <h5>📝 Otros datos</h5>
         <Form.Control
           as="textarea"
@@ -571,15 +569,17 @@ const PerfilCandidato = () => {
         />
       </Card>
 
-      <div className="text-center text-muted mb-2">
-        🔒 Recuerda guardar los cambios efectuados para que se conserven.
-      </div>
+      <div className="bottom-info">
 
-      {/* ✅ Botón final */}
-      <div className="text-end">
-        <Button onClick={handleGuardarCambios} variant="success">
-          Guardar cambios ✅
-        </Button>
+        <div className="text-center text-muted mb-2">
+          🔒 Recuerda guardar los cambios efectuados para que se conserven.
+        </div>
+
+        <div className="text-end">
+          <Button className="button-login" size="lg" onClick={handleGuardarCambios} variant="success">
+            Guardar cambios ✅
+          </Button>
+        </div>
       </div>
     </div>
   );

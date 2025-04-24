@@ -1,4 +1,3 @@
-// src/pages/Home/HomeVisitanteLanding.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Container, Form } from "react-bootstrap";

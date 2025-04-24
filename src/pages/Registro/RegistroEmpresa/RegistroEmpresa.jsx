@@ -37,6 +37,7 @@ const RegistroEmpresa = () => {
     setLoading(true);
     try {
       const res = await axios.post("http://localhost:8081/auth/registro-empresa", formData);
+      console.log('res', res)
       toast.success("Registro de empresa exitoso 🎉");
       navigate("/login/empresa");
     } catch (err) {
@@ -51,7 +52,7 @@ const RegistroEmpresa = () => {
   };
 
   return (
-    <Card className="mt-4 mx-auto" style={{ maxWidth: "600px" }}>
+    <Card className="mt-5 mx-auto card-custom-register" style={{ maxWidth: "600px" }}>
       <Card.Body>
         <h4 className="mb-4">Registro de Empresa</h4>
         <Form onSubmit={handleSubmit}>
@@ -125,7 +126,7 @@ const RegistroEmpresa = () => {
             />
           </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={loading}>
+          <Button className="details-button" variant="primary" type="submit" disabled={loading}>
             {loading ? "Registrando..." : "Registrarse como empresa"}
           </Button>
         </Form>

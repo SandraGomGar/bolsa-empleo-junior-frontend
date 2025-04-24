@@ -9,7 +9,7 @@ const HomeEmpresa = () => {
     <div className="container mt-5 text-center">
       <h2 className="mb-3">👋 Bienvenida empresa</h2>
       <p className="mb-4">Gestiona tus ofertas de empleo fácilmente</p>
-      <Button variant="success" onClick={() => navigate("/empresa/perfil")}>
+      <Button variant="success" className="details-button" onClick={() => navigate("/empresa/perfil")}>
         Ir a mi panel de empresa
       </Button>
     </div>

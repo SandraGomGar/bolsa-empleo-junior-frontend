@@ -1,10 +1,10 @@
-// src/pages/OfertasEmpresa/OfertasPublicadas.jsx
 import React, { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Card, Button, Spinner, Form, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { UserContext } from "../../context/UserContext";
 import { useNavigate } from "react-router-dom";
+import './OfertasPublicadas.styles.css'
 
 const OfertasPublicadas = () => {
   const { usuario } = useContext(UserContext);
@@ -78,174 +78,223 @@ const OfertasPublicadas = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <h2>Ofertas Publicadas</h2>
+
+
+    <div className="container mt-5">
+      <h2 className="page-title mb-5">Ofertas Publicadas</h2>
 
       {loading ? (
         <div className="text-center mt-4">
-          <Spinner animation="border" />
+          <Spinner animation="border" variant="primary" />
         </div>
       ) : ofertas.length === 0 ? (
-        <p>No tienes ofertas publicadas todavía.</p>
+        <div className="empty-state">
+          <p className="empty-text">No tienes ofertas publicadas todavía.</p>
+          <Button
+            variant="primary"
+            onClick={() => navigate('/empresa/crear-oferta')}
+            className="create-offer-btn"
+          >
+            Crear nueva oferta
+          </Button>
+        </div>
       ) : (
-        ofertas.map((oferta) => (
-          <Card key={oferta.id} className="mb-3">
-            <Card.Body>
-              {editandoId === oferta.id ? (
-                <>
-                  <Form.Group className="mb-2">
-                    <Form.Label>Título</Form.Label>
-                    <Form.Control
-                      name="titulo"
-                      value={formData.titulo}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+        <div className="ofertas-list">
+          {ofertas.map((oferta) => (
+            <Card key={oferta.id} className="oferta-card Card">
+              <Card.Body className="p-3">
+                {editandoId === oferta.id ? (
+                  <div className="edit-form">
+                    <Form.Group className="mb-2">
+                      <Form.Label>Título</Form.Label>
+                      <Form.Control
+                        name="titulo"
+                        value={formData.titulo}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Ubicación</Form.Label>
-                    <Form.Control
-                      name="ubicacion"
-                      value={formData.ubicacion}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Ubicación</Form.Label>
+                      <Form.Control
+                        name="ubicacion"
+                        value={formData.ubicacion}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Vacantes</Form.Label>
-                    <Form.Control
-                      name="vacantes"
-                      type="number"
-                      value={formData.vacantes}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Vacantes</Form.Label>
+                      <Form.Control
+                        name="vacantes"
+                        type="number"
+                        value={formData.vacantes}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Funciones</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      name="funciones"
-                      value={formData.funciones}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Funciones</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        name="funciones"
+                        value={formData.funciones}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Requisitos</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      name="requisitos"
-                      value={formData.requisitos}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Requisitos</Form.Label>
+                      <Form.Control
+                        as="textarea"
+                        name="requisitos"
+                        value={formData.requisitos}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Tipo de contrato</Form.Label>
-                    <Form.Control
-                      name="tipoContrato"
-                      value={formData.tipoContrato}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Tipo de contrato</Form.Label>
+                      <Form.Control
+                        name="tipoContrato"
+                        value={formData.tipoContrato}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Sueldo</Form.Label>
-                    <Form.Control
-                      name="sueldo"
-                      value={formData.sueldo}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Sueldo</Form.Label>
+                      <Form.Control
+                        name="sueldo"
+                        value={formData.sueldo}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <Form.Group className="mb-2">
-                    <Form.Label>Modalidad</Form.Label>
-                    <Form.Control
-                      name="modalidad"
-                      value={formData.modalidad}
-                      onChange={handleChange}
-                    />
-                  </Form.Group>
+                    <Form.Group className="mb-2">
+                      <Form.Label>Modalidad</Form.Label>
+                      <Form.Control
+                        name="modalidad"
+                        value={formData.modalidad}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
 
-                  <div className="d-flex justify-content-end gap-2">
-                    <Button variant="success" size="sm" onClick={handleGuardar}>
-                      Guardar cambios
-                    </Button>
-                    <Button variant="secondary" size="sm" onClick={() => setEditandoId(null)}>
-                      Cancelar
-                    </Button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <Card.Title>{oferta.titulo}</Card.Title>
-                  <Card.Subtitle className="mb-2 text-muted">
-                    {oferta.ubicacion} • {oferta.modalidad}
-                  </Card.Subtitle>
-                  <Card.Text>
-                    <strong>Vacantes:</strong> {oferta.vacantes}<br />
-                    <strong>Tipo de contrato:</strong> {oferta.tipoContrato}<br />
-                    <strong>Sueldo:</strong> {oferta.sueldo || "Salario no disponible"}
-                  </Card.Text>
-
-                  {/* Detalles opcionales */}
-                  {oferta.mostrarDetalles && (
-                    <div className="mb-3">
-                      <p><strong>Funciones:</strong><br />{oferta.funciones}</p>
-                      <p><strong>Requisitos:</strong><br />{oferta.requisitos}</p>
+                    <div className="d-flex justify-content-end gap-2 mt-3">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={handleGuardar}
+                        className="save- details-button"
+                      >
+                        Guardar cambios
+                      </Button>
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() => setEditandoId(null)}
+                        className="cancel-btn"
+                      >
+                        Cancelar
+                      </Button>
                     </div>
-                  )}
+                  </div>
+                ) : (
+                  <>
+                
+                    <div className="oferta-header">
+                      <h3 className="oferta-title">{oferta.titulo}</h3>
 
-                  <div className="d-flex justify-content-between align-items-center">
-                    {/* Botón izquierdo (Ver más) */}
-                    <Button
-                      variant="outline-secondary"
-                      size="sm"
-                      onClick={() =>
-                        setOfertas((prev) =>
-                          prev.map((o) =>
+                    </div>
+
+                    <div className="mini-cards-container mb-5">
+                      <Card className="mini-cards">
+                        <label>Vacantes</label>
+                        <p>{oferta.vacantes || "No especificado"}</p>
+                      </Card>
+
+
+                      <Card className="mini-cards">
+                        <label>Tipo de contrato</label>
+                        <p>{oferta.tipoContrato || "No especificado"}</p>
+                      </Card>
+
+                      <Card className="mini-cards">
+                        <label>Salario</label>
+                        <p>{oferta.sueldo || "Salario no disponible"}</p>
+                      </Card>
+
+                      <Card className="mini-cards">
+                        <label>Modalidad</label>
+                        <p>{oferta.modalidad || "No especificado"}</p>
+                      </Card>
+
+                      <Card className="mini-cards">
+                        <label>Ubicación</label>
+                        <p>{oferta.ubicacion || "No especificado"}</p>
+                      </Card>
+                    </div>
+
+                    {oferta.mostrarDetalles && (
+                      <div className="oferta-more-details">
+                        <div className="mt-4 mb-5">
+                          <p><strong>Funciones:</strong><br />{oferta.funciones}</p>
+                          <p><strong>Requisitos:</strong><br />{oferta.requisitos}</p>
+                        </div>
+                      </div>
+                    )}
+
+                    <div className="oferta-actions">
+                      <Button
+                        variant="outline-secondary"
+                        size="sm"
+                        onClick={() =>
+                          setOfertas(prev => prev.map(o =>
                             o.id === oferta.id
                               ? { ...o, mostrarDetalles: !o.mostrarDetalles }
                               : o
-                          )
-                        )
-                      }
-                    >
-                      {oferta.mostrarDetalles ? "➖ Ver menos" : "➕ Ver más"}
-                    </Button>
+                          ))
+                        }
+                        className="toggle-btn"
+                      >
+                        {oferta.mostrarDetalles ? "Ocultar detalles" : "Ver detalles"}
+                      </Button>
 
-                    {/* Botones derechos */}
-                    <div className="d-flex gap-2">
-                      <Button
-                        variant="outline-info"
-                        size="sm"
-                        onClick={() => navigate(`/empresa/oferta/${oferta.id}/candidatos`)}
-                      >
-                        Ver candidatos
-                      </Button>
-                      <Button
-                        variant="outline-primary"
-                        size="sm"
-                        onClick={() => handleEditar(oferta)}
-                      >
-                        Editar
-                      </Button>
-                      <Button
-                        variant="outline-danger"
-                        size="sm"
-                        onClick={() => confirmarEliminacion(oferta.id)}
-                      >
-                        Eliminar
-                      </Button>
+                      <div className="action-buttons">
+                        <Button
+                          variant="outline-info"
+                          size="sm"
+                          onClick={() => navigate(`/empresa/oferta/${oferta.id}/candidatos`)}
+                          className="action-btn alert-info-custom"
+                        >
+                          Candidatos
+                        </Button>
+                        <Button
+                          variant="outline-primary"
+                          size="sm"
+                          onClick={() => handleEditar(oferta)}
+                          className="action-btn details-button"
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          onClick={() => confirmarEliminacion(oferta.id)}
+                          className="action-btn"
+                        >
+                          Eliminar
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                </>
-              )}
-            </Card.Body>
-          </Card>
-        ))
+                  </>
+                )}
+              </Card.Body>
+            </Card>
+          ))}
+        </div>
       )}
+
 
       <Modal show={mostrarModal} onHide={() => setMostrarModal(false)}>
         <Modal.Header closeButton>

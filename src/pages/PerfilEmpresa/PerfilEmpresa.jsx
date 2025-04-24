@@ -56,15 +56,15 @@ const PerfilEmpresa = () => {
   };
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <h2>Mi perfil - Empresa</h2>
-        <Button variant="success" onClick={handleCrearOferta}>
+        <Button variant="success" size="lg" className="details-button" onClick={handleCrearOferta}>
           + Crear oferta
         </Button>
       </div>
 
-      <Card>
+      <Card className="Card">
         <Card.Body>
           <Form onSubmit={handleGuardar}>
             <Form.Group className="mb-3">
@@ -128,7 +128,7 @@ const PerfilEmpresa = () => {
 
             {modoEdicion ? (
               <div className="d-flex justify-content-between">
-                <Button type="submit" variant="primary">
+                <Button className="alert-info-custom" type="submit" variant="primary">
                   💾 Guardar cambios
                 </Button>
                 <Button variant="secondary" onClick={() => setModoEdicion(false)}>
@@ -136,7 +136,7 @@ const PerfilEmpresa = () => {
                 </Button>
               </div>
             ) : (
-              <Button variant="outline-primary" onClick={() => setModoEdicion(true)}>
+              <Button className="alert-info-custom" variant="outline-primary" onClick={() => setModoEdicion(true)}>
                 ✏️ Editar
               </Button>
             )}

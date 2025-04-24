@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { Card, Spinner, Button, Badge } from "react-bootstrap";
 import { toast } from "react-toastify";
+import './CandidatosOferta.styles.css'
 
 const CandidatosOferta = () => {
   const { id } = useParams(); // ID de la oferta desde la URL
@@ -15,7 +16,7 @@ const CandidatosOferta = () => {
       try {
         const res = await axios.get(`http://localhost:8081/api/postulaciones/oferta/${id}`);
         setPostulaciones(res.data);
-      // eslint-disable-next-line no-unused-vars
+        // eslint-disable-next-line no-unused-vars
       } catch (error) {
         toast.error("Error al cargar los candidatos");
       } finally {
@@ -39,7 +40,7 @@ const CandidatosOferta = () => {
       );
 
       toast.success(`Candidato ${nuevoEstado.toLowerCase()}`);
-    // eslint-disable-next-line no-unused-vars
+      // eslint-disable-next-line no-unused-vars
     } catch (error) {
       toast.error("Error al actualizar el estado");
     }
@@ -75,28 +76,49 @@ const CandidatosOferta = () => {
   }
 
   return (
-    <div className="container mt-4">
-      <h2>Candidatos para la oferta</h2>
+    <div className="container mt-5">
+      <h2 className="mb-5">Candidatos para la oferta</h2>
       {postulaciones.map((p) => (
-        <Card key={p.id} className="mb-3">
+        <Card key={p.id} className="mb-3 Card">
           <Card.Body>
+            <div className="d-flex container-nameBadge">
             <Card.Title>{p.candidato.nombre} ({p.candidato.email})</Card.Title>
             <Card.Subtitle className="mb-2 text-muted">
               {renderEstado(p.estado)}
             </Card.Subtitle>
+            </div>
 
-            <Card.Text>
-              <strong>Teléfono:</strong> {p.candidato.telefono}<br />
-              <strong>Ubicación:</strong> {p.candidato.provincia} {p.candidato.poblacion} {p.candidato.pais}<br />
-              <strong>Otros datos:</strong> {p.candidato.otrosDatos || "No especificado"}<br />
-            </Card.Text>
+            <div className="job-details mb-3">
+              <div className="detail-row">
+                <span className="detail-label bold">
+                  <i className="bi bi-phone-alt-fill text-muted me-1"></i>
+                  Teléfono:
+                </span>
+                <span>{p.candidato.telefono}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label bold">
+                  <i className="bi bi-geo-alt-fill text-muted me-1"></i>
+                  Ubicación:
+                </span>
+                <span>{p.candidato.provincia}</span>
+              </div>
+              <div className="detail-row">
+                <span className="detail-label bold">
+                  <i className="bi bi-book-half text-muted me-1"></i>
+                  Otros datos:
+                </span>
+                <span>{p.candidato.otrosDatos || "No especificado"}</span>
+              </div>
+
+            </div>
 
             <Card.Text>
               <strong>Idiomas:</strong>
               {p.candidato.idiomas.length > 0 ? (
                 <ul>
-                  {p.candidato.idiomas.map((i) => (
-                    <li key={i.id}>{i.nombre} - {i.nivel}</li>
+                  {p.candidato.idiomas.map((e) => (
+                    <li key={e.id}>{e.nivel} en {e.centro}</li>
                   ))}
                 </ul>
               ) : (
@@ -132,6 +154,7 @@ const CandidatosOferta = () => {
 
             <div className="d-flex gap-2 justify-content-end">
               <Button
+              className="details-button"
                 variant="success"
                 size="sm"
                 onClick={() => actualizarEstado(p.id, "ACEPTADA")}

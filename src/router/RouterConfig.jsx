@@ -1,9 +1,7 @@
-// src/router/RouterConfig.jsx
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import HomeVisitanteLanding from "../pages/Home/HomeVisitanteLanding"; // ✅ Landing principal
-import HomeRouter from "../pages/Home/HomeRouter"; // No se está usando
+import HomeVisitanteLanding from "../pages/Home/HomeVisitanteLanding";
 import Login from "../pages/Login/Login";
 import RegistroEmpresa from "../pages/Registro/RegistroEmpresa/RegistroEmpresa";
 import RegistroCandidato from "../pages/Registro/RegistroCandidato/RegistroCandidato";

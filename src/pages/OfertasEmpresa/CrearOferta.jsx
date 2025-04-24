@@ -62,6 +62,7 @@ const CrearOferta = () => {
       });
 
       toast.success("Oferta creada correctamente ✅");
+      console.log('res' , res)
       navigate("/empresa/ofertas");
     } catch (err) {
       toast.error("Error al crear la oferta 😢");
@@ -70,7 +71,7 @@ const CrearOferta = () => {
   };
 
   return (
-    <Card className="mt-4 mx-auto" style={{ maxWidth: "700px" }}>
+    <Card className="mt-4 mx-auto Card" style={{ maxWidth: "700px" }}>
       <Card.Body>
         <h4 className="mb-4">Crear Nueva Oferta</h4>
         <Form onSubmit={handleSubmit}>
@@ -180,7 +181,7 @@ const CrearOferta = () => {
             </Form.Select>
           </Form.Group>
 
-          <Button variant="success" type="submit">
+          <Button className="details-button" size="lg" variant="success" type="submit">
             Crear oferta ✅
           </Button>
         </Form>

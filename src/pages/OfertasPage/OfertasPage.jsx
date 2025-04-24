@@ -22,9 +22,17 @@ const OfertasPage = () => {
   }
 
   return (
-    <div className="container mt-4">
+    <div className="">
+    <div className="home-candidato-title-box">
+      <h2 className="mb-4 white home-candidato-title">
+        Bienvenido/a, aquí puedes encontrar ofertas adaptadas a tu perfil 🎯
+      </h2>
+    </div>
+    <div className="container home-candidato-container-list">
       <ListaOfertas ofertas={ofertas} loading={loading} error={error} onVerDetalles={navegarADetalles} />
     </div>
+    </div>
+
   );
 };
 

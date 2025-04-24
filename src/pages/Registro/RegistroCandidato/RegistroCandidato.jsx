@@ -3,6 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './RegistroCandidato.styles.css'
 
 const RegistroCandidato = () => {
   const [step, setStep] = useState(1);
@@ -87,7 +88,7 @@ const RegistroCandidato = () => {
   };
 
   return (
-    <Card className="mt-4 mx-auto" style={{ maxWidth: "600px" }}>
+    <Card className="mt-5 mx-auto card-custom-register" style={{ maxWidth: "600px" }}>
       <Card.Body>
         <h4 className="mb-4">Registro de Candidato (Paso {step} de 4)</h4>
         <Form onSubmit={handleSubmit}>
@@ -115,7 +116,7 @@ const RegistroCandidato = () => {
               </Form.Group>
 
               <div className="d-flex justify-content-end">
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}
@@ -163,7 +164,7 @@ const RegistroCandidato = () => {
 
               <div className="d-flex justify-content-between">
                 <Button variant="secondary" onClick={handleBack}>← Volver</Button>
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}
@@ -222,7 +223,7 @@ const RegistroCandidato = () => {
 
               <div className="d-flex justify-content-between">
                 <Button variant="secondary" onClick={handleBack}>← Volver</Button>
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}

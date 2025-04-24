@@ -1,0 +1,10 @@
+.bottom-info {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: flex-end;
+}
+
+.Card {
+    text-align: start;
+}

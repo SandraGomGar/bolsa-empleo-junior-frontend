@@ -1,6 +1,14 @@
 import React, { useEffect } from "react";
-import { Card, ListGroup, Spinner, Button } from "react-bootstrap";
+import { Card,  Spinner, Button } from "react-bootstrap";
 import { toast } from "react-toastify";
+import './ListaOfertas.styles.css'
+
+import defaultLogo from "../../assets/images/Imagen Landing Busqueda.png";
+import techNovaLogo from "../../assets/images/technovaLogo.png";
+import cloudsyLogo from "../../assets/images/cloudsyLogo.png";
+import bytewayLogo from "../../assets/images/bytewayLogo.png";
+import codifylabLogo from "../../assets/images/codifylabLogo.png";
+import devsparckLogo from "../../assets/images/devsparckLogo.png";
 
 const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
   useEffect(() => {
@@ -14,6 +22,18 @@ const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
       toast.info("No hay ofertas disponibles en este momento");
     }
   }, [loading, ofertas]);
+
+  const companyLogos = {
+    'TechNova': techNovaLogo,
+    'DevSpark': devsparckLogo,
+    'CodifyLab': codifylabLogo,
+    'ByteWay': bytewayLogo,
+    'Cloudsy': cloudsyLogo
+  };
+  
+  const getCompanyLogo = (companyName) => {
+    return companyLogos[companyName] || defaultLogo;
+  };
 
   if (loading) {
     return (
@@ -35,18 +55,33 @@ const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
   }
 
   return (
-    <Card className="mt-4">
-      <Card.Header as="h5">Ofertas Publicadas</Card.Header>
-      <ListGroup variant="flush">
-        {ofertas?.map((oferta) => (
-          <ListGroup.Item key={oferta.id}>
-            <div className="d-flex justify-content-between align-items-start flex-wrap">
-              <div className="me-3">
-                <h5>{oferta.titulo}</h5>
-                <p className="mb-1 text-muted">{oferta.empresa?.nombre || "Empresa"}</p>
-                <small className="text-muted">{oferta.ubicacion}</small>
+
+    <div className="list-cards-container">
+      {ofertas?.map((oferta) => (
+        <Card className="oferta-card">
+          <Card.Body>
+            <div className="oferta-container">
+              <img 
+                src={getCompanyLogo(oferta.empresa?.nombre)} 
+                alt={`Logo de ${oferta.empresa?.nombre || "empresa"}`}
+                className="company-logo"
+              />
+              <div className="oferta-title-container">
+                <Card.Title>{oferta.titulo}</Card.Title>
+                <Card.Text>
+                  {oferta.empresa?.nombre || "Empresa"}
+                </Card.Text>
               </div>
+
+              <div className="oferta-location-container">
+                <Card.Text>
+                <i className="bi bi-geo-alt-fill text-primary me-2"></i>
+                  {oferta.ubicacion}
+                </Card.Text>
+              </div>
+
               <Button
+                className="button-details"
                 variant="outline-primary"
                 size="sm"
                 onClick={() => onVerDetalles(oferta.id)}
@@ -55,11 +90,11 @@ const ListaOfertas = ({ ofertas, loading, error, onVerDetalles }) => {
                 Ver detalles
               </Button>
             </div>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Card>
-  );
+          </Card.Body>
+        </Card>
+      ))}
+    </div>
+  )
 };
 
 export default ListaOfertas;
