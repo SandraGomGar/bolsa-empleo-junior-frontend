@@ -16,6 +16,7 @@ const BuscadorOfertas = ({ filtros, setFiltros, onBuscar }) => {
           <Form.Control
             type="text"
             name="palabraClave"
+            size="lg"
             placeholder="Buscar por palabra clave (ej: frontend, marketing...)"
             value={filtros.palabraClave}
             onChange={handleChange}
@@ -25,14 +26,15 @@ const BuscadorOfertas = ({ filtros, setFiltros, onBuscar }) => {
           <Form.Control
             type="text"
             name="lugar"
+            size="lg"
             placeholder="Lugar (ej: Madrid, remoto...)"
             value={filtros.lugar}
             onChange={handleChange}
           />
         </Col>
         <Col md={2}>
-          <Button type="submit" variant="primary" className="w-100">
-            Buscar 🔍
+          <Button type="submit" variant="primary" size="lg" className="w-100 buttonForm">
+          🔍 Buscar 
           </Button>
         </Col>
       </Row>

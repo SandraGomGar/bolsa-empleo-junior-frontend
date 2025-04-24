@@ -1,0 +1,27 @@
+
+.custom-navbar {
+    max-height: 80px;
+    padding-left: 2rem;     
+    padding-right: 2rem;    
+    background-color: #f8f9fa !important;
+    box-shadow: rgba(49, 64, 71, 0.08) 0px 13px 10px 0px; 
+  }
+  
+  .custom-navbar .navbar-brand {
+    margin-right: auto;    
+  }
+  
+  .custom-navbar .navbar-nav {
+    margin-left: auto;    
+  }
+
+  .login-buttons {
+    display: flex;
+    align-items:center;
+    gap: 32px;
+    width: 100%;
+  }
+
+  .button {
+    width: 200px;
+  }

@@ -3,6 +3,7 @@ import { Form, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import './RegistroCandidato.styles.css'
 
 const RegistroCandidato = () => {
   const [step, setStep] = useState(1);
@@ -20,11 +21,23 @@ const RegistroCandidato = () => {
     codigoPostal: "",
     provincia: "",
     poblacion: "",
-    cv: null,
     tieneExperiencia: "",
-    experiencia: "",
+    empresa: "",
+    puesto: "",
+    descripcionExperiencia: "",
+    habilidades: "",
+    fechaInicioMes: "",
+    fechaInicioAnio: "",
+    fechaFinMes: "",
+    fechaFinAnio: "",
     tieneEstudios: "",
-    estudios: "",
+    estudiosNivel: "",
+    estudiosCentro: "",
+    estudiosFechaInicioMes: "",
+    estudiosFechaInicioAnio: "",
+    estudiosFechaFinMes: "",
+    estudiosFechaFinAnio: "",
+    estudiosCursandoActualmente: false,
     tipo: "CANDIDATO",
   });
 
@@ -33,13 +46,6 @@ const RegistroCandidato = () => {
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
-    }));
-  };
-
-  const handleFileChange = (e) => {
-    setFormData((prev) => ({
-      ...prev,
-      cv: e.target.files[0],
     }));
   };
 
@@ -67,19 +73,8 @@ const RegistroCandidato = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const data = new FormData();
-    for (const key in formData) {
-      if (formData[key] !== null) {
-        data.append(key, formData[key]);
-      }
-    }
-
     try {
-      await axios.post("http://localhost:8081/auth/registro-candidato", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await axios.post("http://localhost:8081/auth/registro-candidato", formData);
 
       toast.success("Registro completado con éxito 🎉");
       navigate("/login/candidato");
@@ -93,9 +88,9 @@ const RegistroCandidato = () => {
   };
 
   return (
-    <Card className="mt-4 mx-auto" style={{ maxWidth: "600px" }}>
+    <Card className="mt-5 mx-auto card-custom-register" style={{ maxWidth: "600px" }}>
       <Card.Body>
-        <h4 className="mb-4">Registro de Candidato (Paso {step} de 5)</h4>
+        <h4 className="mb-4">Registro de Candidato (Paso {step} de 4)</h4>
         <Form onSubmit={handleSubmit}>
           {/* Paso 1 */}
           {step === 1 && (
@@ -121,7 +116,7 @@ const RegistroCandidato = () => {
               </Form.Group>
 
               <div className="d-flex justify-content-end">
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}
@@ -169,34 +164,13 @@ const RegistroCandidato = () => {
 
               <div className="d-flex justify-content-between">
                 <Button variant="secondary" onClick={handleBack}>← Volver</Button>
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}
 
           {/* Paso 3 */}
           {step === 3 && (
-            <>
-              <Form.Group className="mb-3">
-                <Form.Label>Sube tu currículum (opcional)</Form.Label>
-                <Form.Control type="file" name="cv" onChange={handleFileChange} />
-                {formData.cv && (
-                  <div className="mt-2 d-flex justify-content-between align-items-center">
-                    <span className="text-success">📄 {formData.cv.name}</span>
-                    <Button size="sm" variant="outline-danger" onClick={() => setFormData((prev) => ({ ...prev, cv: null }))}>Quitar archivo</Button>
-                  </div>
-                )}
-              </Form.Group>
-
-              <div className="d-flex justify-content-between">
-                <Button variant="secondary" onClick={handleBack}>← Volver</Button>
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
-              </div>
-            </>
-          )}
-
-          {/* Paso 4 */}
-          {step === 4 && (
             <>
               <Form.Group className="mb-3">
                 <Form.Label>¿Tienes experiencia?</Form.Label>
@@ -208,25 +182,62 @@ const RegistroCandidato = () => {
               </Form.Group>
 
               {formData.tieneExperiencia === "sí" && (
-                <Form.Group className="mb-3">
-                  <Form.Label>Describe tu experiencia</Form.Label>
-                  <Form.Control as="textarea" name="experiencia" value={formData.experiencia} onChange={handleChange} rows={3} />
-                </Form.Group>
+                <>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Empresa</Form.Label>
+                    <Form.Control type="text" name="empresa" value={formData.empresa} onChange={handleChange} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Puesto</Form.Label>
+                    <Form.Control type="text" name="puesto" value={formData.puesto} onChange={handleChange} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Descripción</Form.Label>
+                    <Form.Control as="textarea" name="descripcionExperiencia" value={formData.descripcionExperiencia} onChange={handleChange} rows={3} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Habilidades</Form.Label>
+                    <Form.Control type="text" name="habilidades" value={formData.habilidades} onChange={handleChange} />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Fecha de inicio</Form.Label>
+                    <div className="d-flex gap-2">
+                      <Form.Control type="text" name="fechaInicioMes" placeholder="MM" value={formData.fechaInicioMes} onChange={handleChange} />
+                      <Form.Control type="text" name="fechaInicioAnio" placeholder="AAAA" value={formData.fechaInicioAnio} onChange={handleChange} />
+                    </div>
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Fecha de fin (si aplica)</Form.Label>
+                    <div className="d-flex gap-2">
+                      <Form.Control type="text" name="fechaFinMes" placeholder="MM" value={formData.fechaFinMes} onChange={handleChange} />
+                      <Form.Control type="text" name="fechaFinAnio" placeholder="AAAA" value={formData.fechaFinAnio} onChange={handleChange} />
+                    </div>
+                  </Form.Group>
+                </>
               )}
 
               <div className="d-flex justify-content-between">
                 <Button variant="secondary" onClick={handleBack}>← Volver</Button>
-                <Button variant="primary" onClick={handleNext}>Siguiente →</Button>
+                <Button variant="primary" className="details-button" onClick={handleNext}>Siguiente →</Button>
               </div>
             </>
           )}
 
-          {/* Paso 5 */}
-          {step === 5 && (
+          {/* Paso 4 */}
+          {step === 4 && (
             <>
               <Form.Group className="mb-3">
                 <Form.Label>¿Tienes estudios?</Form.Label>
-                <Form.Select name="tieneEstudios" value={formData.tieneEstudios} onChange={handleChange}>
+                <Form.Select
+                  name="tieneEstudios"
+                  value={formData.tieneEstudios}
+                  onChange={handleChange}
+                >
                   <option value="">Selecciona una opción</option>
                   <option value="sí">Sí</option>
                   <option value="no">No</option>
@@ -234,13 +245,80 @@ const RegistroCandidato = () => {
               </Form.Group>
 
               {formData.tieneEstudios === "sí" && (
-                <Form.Group className="mb-3">
-                  <Form.Label>Describe tus estudios</Form.Label>
-                  <Form.Control as="textarea" name="estudios" value={formData.estudios} onChange={handleChange} rows={3} />
-                </Form.Group>
+                <>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Nivel</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="estudiosNivel"
+                      value={formData.estudiosNivel}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Group className="mb-3">
+                    <Form.Label>Centro</Form.Label>
+                    <Form.Control
+                      type="text"
+                      name="estudiosCentro"
+                      value={formData.estudiosCentro}
+                      onChange={handleChange}
+                    />
+                  </Form.Group>
+
+                  <Form.Check
+                    type="checkbox"
+                    name="estudiosCursandoActualmente"
+                    label="Cursando actualmente"
+                    checked={formData.estudiosCursandoActualmente}
+                    onChange={handleChange}
+                  />
+
+                  <Form.Group className="mb-2 mt-3">
+                    <Form.Label>Fecha de inicio</Form.Label>
+                    <div className="d-flex gap-2">
+                      <Form.Control
+                        type="text"
+                        name="estudiosFechaInicioMes"
+                        placeholder="MM"
+                        value={formData.estudiosFechaInicioMes}
+                        onChange={handleChange}
+                      />
+                      <Form.Control
+                        type="text"
+                        name="estudiosFechaInicioAnio"
+                        placeholder="AAAA"
+                        value={formData.estudiosFechaInicioAnio}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </Form.Group>
+
+                  {!formData.estudiosCursandoActualmente && (
+                    <Form.Group className="mb-2 mt-3">
+                      <Form.Label>Fecha de fin (si aplica)</Form.Label>
+                      <div className="d-flex gap-2">
+                        <Form.Control
+                          type="text"
+                          name="estudiosFechaFinMes"
+                          placeholder="MM"
+                          value={formData.estudiosFechaFinMes}
+                          onChange={handleChange}
+                        />
+                        <Form.Control
+                          type="text"
+                          name="estudiosFechaFinAnio"
+                          placeholder="AAAA"
+                          value={formData.estudiosFechaFinAnio}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </Form.Group>
+                  )}
+                </>
               )}
 
-              <div className="d-flex justify-content-between">
+              <div className="d-flex justify-content-between mt-4">
                 <Button variant="secondary" onClick={handleBack}>← Volver</Button>
                 <Button type="submit" variant="success">Registrarse ✅</Button>
               </div>

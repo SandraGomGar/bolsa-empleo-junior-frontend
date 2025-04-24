@@ -1,0 +1,57 @@
+
+.oferta-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.oferta-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.oferta-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+}
+
+.oferta-location-container {
+    display: flex;
+    align-items: flex-end;
+    width: 70%;
+
+}
+
+.button-details{
+    width: 50%;
+    color: white;
+    font-weight: bold;
+    background-color: #AEAFFE;
+    border: none;
+    padding: 16px;
+
+    &:hover{
+        background-color: #7779bd;
+    }
+}
+
+.company-logo {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+    margin-right: 15px;
+    border-radius: 4px;
+    padding: 5px;
+  }
+
+  .list-cards-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 32px;
+  }

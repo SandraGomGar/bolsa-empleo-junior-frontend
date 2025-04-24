@@ -2,14 +2,18 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Form, Button, Card } from "react-bootstrap";
 import { toast } from "react-toastify";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { UserContext } from "../../context/UserContext";
+import logoWeb from "../../assets/images/logoWeb.png";
+import imagenLogin from "../../assets/images/imagenLogin.png";
+
+
+import './Login.styles.css'
 
 const Login = ({ tipo }) => {
   const [formData, setFormData] = useState({ email: "", contraseña: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const { login: loginContext } = useContext(UserContext);
 
   useEffect(() => {
@@ -34,11 +38,11 @@ const Login = ({ tipo }) => {
       }
 
       toast.success("Inicio de sesión exitoso 🎉");
+
       loginContext(usuario);
 
-      // Redirigir según el tipo
       if (usuario.tipo === "CANDIDATO") {
-        navigate("/candidato/perfil");
+        navigate("/candidato/home");
       } else if (usuario.tipo === "EMPRESA") {
         navigate("/empresa/perfil");
       } else {
@@ -52,44 +56,56 @@ const Login = ({ tipo }) => {
   };
 
   return (
-    <Card className="mt-4 mx-auto" style={{ maxWidth: "500px" }}>
-      <Card.Body>
-        <h4 className="mb-4">
-          {tipo === "EMPRESA" && "Login para empresas"}
-          {tipo === "CANDIDATO" && "Login para candidatos"}
-          {!tipo && "Iniciar sesión"}
-        </h4>
-        <Form onSubmit={handleSubmit}>
-          <Form.Group className="mb-3">
-            <Form.Label>Email</Form.Label>
-            <Form.Control type="email" name="email" value={formData.email} onChange={handleChange} required />
-          </Form.Group>
+    <div className="custom-container-login">
+      <Card className="mt-4 card-left" style={{ minWidth: "500px" }}>
+        <Card.Body>
+          <div className="container-images">
+          <img className="image-card" src={logoWeb} alt="logoWeb" />
+          <img className="image-login" src={imagenLogin} alt="imagen-login" />
+          </div>
+        </Card.Body>
+      </Card>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Contraseña</Form.Label>
-            <Form.Control type="password" name="contraseña" value={formData.contraseña} onChange={handleChange} required />
-          </Form.Group>
+      <Card className="mt-4 card-right" style={{ minWidth: "500px" }}>
+        <Card.Body>
+          <h4 className="mb-4 title">
+            {tipo === "EMPRESA" && "Login para empresas"}
+            {tipo === "CANDIDATO" && "Login para candidatos"}
+            {!tipo && "Iniciar sesión"}
+          </h4>
+          <Form onSubmit={handleSubmit}>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control className="form-input-control" type="email" name="email" value={formData.email} onChange={handleChange} required />
+            </Form.Group>
 
-          <Button variant="primary" type="submit" disabled={loading}>
-            {loading ? "Ingresando..." : "Iniciar sesión"}
-          </Button>
-        </Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control className="form-input-control" type="password" name="contraseña" value={formData.contraseña} onChange={handleChange} required />
+            </Form.Group>
+            <div className="d-grid gap-2">
+            <Button className="button-login" variant="primary" type="submit" size="lg" disabled={loading}>
+              {loading ? "Ingresando..." : "Iniciar sesión"}
+            </Button>
+            </div>
+          </Form>
 
-        <div className="mt-3 text-center">
-          <p>¿No tienes cuenta?</p>
-          {tipo === "EMPRESA" && (
-            <Link to="/registro/empresa" className="btn btn-outline-secondary btn-sm">
-              Regístrate como empresa
-            </Link>
-          )}
-          {tipo === "CANDIDATO" && (
-            <Link to="/registro/candidato" className="btn btn-outline-secondary btn-sm">
-              Regístrate como candidato
-            </Link>
-          )}
-        </div>
-      </Card.Body>
-    </Card>
+          <div className="mt-3 text-center">
+            <p>¿No tienes cuenta?</p>
+            {tipo === "EMPRESA" && (
+              <Link cla to="/registro/empresa" className="btn btn-outline-secondary btn-sm registro-btn">
+                Regístrate como empresa
+              </Link>
+            )}
+            {tipo === "CANDIDATO" && (
+              <Link cla to="/registro/candidato" className="btn btn-outline-secondary btn-sm registro-btn">
+                Regístrate como candidato
+              </Link>
+            )}
+          </div>
+        </Card.Body>
+      </Card>
+    </div>
   );
 };
 
